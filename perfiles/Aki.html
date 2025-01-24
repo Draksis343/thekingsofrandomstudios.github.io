@@ -16,7 +16,7 @@
             padding: 20px;
         }
         .navbar {
-            position: absolute;
+            position: fixed;
             left: 0;
             top: 0;
             width: 250px;
@@ -26,6 +26,7 @@
             transform: translateX(-100%);
             transition: transform 0.3s ease;
             padding-top: 60px;
+            z-index: 1000;
         }
         .navbar.show-navbar {
             transform: translateX(0);
