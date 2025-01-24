@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descripción del Evento</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+        }
+        .navbar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            overflow-x: hidden;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding-top: 60px;
+        }
+        .navbar.show-navbar {
+            transform: translateX(0);
+        }
+        .navbar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: background 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+        }
+        .navbar-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+        .event-container {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 60px;
+            text-align: left;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .event-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            padding-top: 20px;
+        }
+        .event-details {
+            padding: 20px;
+        }
+        .event-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .event-description {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .event-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ffcc00;
+            color: #1c1c1c;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .event-link:hover {
+            background-color: #e6b800;
+        }
+        .studio-logo {
+            position: fixed;
+            top: 10px;
+            center: 10px;
+            width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <img src="img/TKORC.png" alt="Studio Logo" class="studio-logo">
+    <p></p>
+    <div class="navbar-toggle" onclick="toggleNavbar()">☰</div>
+    <div class="navbar" id="navbar">
+        <a href="../miembros.html">MIEMBROS</a>
+        <a href="../eventos.html">EVENTOS</a>
+    </div>
+    <div class="event-container">
+        <img src="img/INFEST.png" alt="Evento Portada" class="event-image">
+        <div class="event-details">
+            <div class="event-title">Minecraft: I.N.F.E.S.T. - ULTRA HARDCORE</div>
+            <div class="event-description">
+                Esta serie se desarrolla en un mundo postapocalíptico donde la humanidad lucha por sobrevivir contra hordas de infectados, obsesionados con propagar el hongo que ha provocado el colapso de la civilización. El juego se llevará a cabo en modo ultra hardcore, donde la regeneración de vida solo será posible mediante medicamentos. Para equilibrar la dificultad, los jugadores contarán con tres vidas. Sin embargo, una vez agotadas, será el fin del juego. El objetivo es sobrevivir hasta el día 30, alcanzando un campamento aislado que ofrece protección total contra los infectados. ¿Quién logrará llegar al refugio final y asegurar su supervivencia?
+            </div>
+            <a href="https://forms.gle/tBVuPwSFH2pbRkS97" class="event-link">Participar</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleNavbar() {
+            var navbar = document.getElementById('navbar');
+            navbar.classList.toggle('show-navbar');
+        }
+    </script>
+</body>
+</html>

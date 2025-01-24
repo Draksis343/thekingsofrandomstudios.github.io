@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .profile-container {
+            width: 80%;
+            max-width: 800px;
+            margin-top: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+        .profile-cover {
+            width: 100%;
+            height: 200px;
+            background: url('img/skibidi.jpeg') center/cover no-repeat;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #1c1c1c;
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .title-badge {
+            position: relative;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            padding-top: 30px;
+            background: url('img/Vástago del apocalipsis.png') center/cover no-repeat;
+            
+            cursor: pointer;
+        }
+        .title-badge:hover::after {
+            content: 'Vástago del apocalipsis';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .profile-info {
+            margin-top: 50px;
+        }
+        .profile-info h1 {
+            font-size: 24px;
+            margin: 10px 0 5px;
+        }
+        .profile-info h2 {
+            font-size: 18px;
+            color: #ffcc00;
+            margin: 0 0 10px;
+            
+        }
+        .profile-info p {
+            font-size: 14px;
+            color: #ccc;
+
+        }
+        .achievements-container {
+            margin: 20px auto;
+            width: 90%;
+            overflow: hidden;
+            position: relative;
+        }
+        .achievements-carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .achievement {
+            flex: 0 0 150px;
+            margin: 0 10px;
+            text-align: center;
+        }
+        .achievement img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .achievement p {
+            font-size: 12px;
+            color: #ccc;
+            margin-top: 5px;
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+}
+
+    </style>
+</head>
+<body>
+    <img src="img/TKORC.png" alt="Studio Logo" class="studio-logo">
+
+<div class="navbar-toggle" onclick="toggleNavbar()">☰</div>
+    <div class="navbar" id="navbar">
+        <a href="../miembros.html">MIEMBROS</a>
+        <a href="../eventos.html">EVENTOS</a>
+    </div>
+
+    <div class="profile-container">
+        <div class="profile-cover"></div>
+        <img src="img/tartas.jpg" alt="Profile Picture" class="profile-pic">
+        <div class="title-badge"></div>
+        <div class="profile-info">
+            <h1>Skibiditartas</h1>
+            <h2>Vástago del apocalipsis</h2>
+            <p>Desde: 01/01/2025</p>
+            <p>Aficionado a las pajas y súper fan de los skibidi toilets.</p>
+        </div>
+        <div class="achievements-container">
+            <button class="carousel-button left" onclick="moveCarousel(-1)">❮</button>
+            <div class="achievements-carousel" id="carousel">
+                <div class="achievement">
+                    <img src="img/Vástago del apocalipsis.png" alt="Achievement 1">
+                    <p>Logro 1</p>
+                </div>
+                <div class="achievement">
+                    <img src="img/Vástago del apocalipsis.png" alt="Achievement 2">
+                    <p>Logro 2</p>
+                </div>
+                <div class="achievement">
+                    <img src="img/Vástago del apocalipsis.png" alt="Achievement 3">
+                    <p>Logro 3</p>
+                </div>
+            </div>
+            <button class="carousel-button right" onclick="moveCarousel(1)">❯</button>
+        </div>
+    </div>
+
+     <div class="achievements-section">
+    <div class="achievement-group">
+        <div class="group-header" onclick="toggleAchievements(this)">
+            <img src="img/logros/infest/Oculto.png" alt="Evento 1" class="group-image">
+            <div class="group-title">I.N.F.E.S.T.</div>
+        </div>
+        <div class="group-content">
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 10 días - Bloqueado.png" alt="Logro 1">
+                <div class="tooltip">
+                    <strong>Superviviente</strong><br>
+                         Sobrevive 10 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 15 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>No es nada facil</strong><br>
+                         Sobrevive 15 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 25 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Puedo con mas...</strong><br>
+                         Sobrevive 25 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 30 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Nada me detiene</strong><br>
+                         Sobrevive 30 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Elimina a todas las calamidades - Asesino de dioses - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Asesino de dioses</strong><br>
+                         Oculto
+                        </div>
+            </div>
+            <!-- Más logros aquí -->
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        let currentIndex = 0;
+        function moveCarousel(direction) {
+            const carousel = document.getElementById('carousel');
+            const items = carousel.children.length;
+            const itemWidth = 150 + 20; // ancho + margen
+            currentIndex = Math.min(Math.max(currentIndex + direction, 0), items - 3);
+            carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+        }
+    </script>
+</body>
+</html>
