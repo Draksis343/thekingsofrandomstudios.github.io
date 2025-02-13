@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ItzyOwO</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .navbar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            overflow-x: hidden;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+        .navbar.show-navbar {
+            transform: translateX(0);
+        }
+        .navbar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: background 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+        }
+        .navbar-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+        .profile-container {
+            width: 80%;
+            max-width: 800px;
+            margin-top: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+        .profile-cover {
+            width: 100%;
+            height: 200px;
+            border-radius: 5px;
+            background: url('img/ItzyPo.jpeg') center/cover no-repeat;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #1c1c1c;
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .title-badge {
+            position: relative;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            padding-top: 30px;
+            background: url('img/Muesca.png') center/cover no-repeat;
+            cursor: pointer;
+        }
+        .title-badge:hover::after {
+            content: 'Sin titulo';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .profile-info {
+            margin-top: 20px;
+        }
+        .profile-info h1 {
+            font-size: 24px;
+            margin: 10px 0 5px;
+        }
+        .profile-info h2 {
+            font-size: 18px;
+            color: #ffcc00;
+            margin: 0 0 10px;
+        }
+        .profile-info p {
+            font-size: 14px;
+            color: #ccc;
+        }
+        .achievements-section {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .achievement-group {
+            border: 1px solid #444;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .group-header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #333;
+        }
+        .group-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .group-title {
+            font-size: 18px;
+            color: white;
+        }
+        .group-content {
+            display: none;
+            padding: 10px;
+            background-color: #444;
+        }
+        .achievement-card {
+            position: relative;
+            display: inline-block;
+            width: 100px;
+            text-align: center;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .achievement-card img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+        .tooltip {
+            visibility: hidden;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            white-space: nowrap;
+            font-size: 12px;
+            transition: visibility 0.2s, opacity 0.2s;
+            opacity: 0;
+        }
+        .achievement-card:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        .studio-logo {
+            position: fixed;
+            top: 10px;
+            center: 10px;
+            width: 100px;
+            height: auto;
+        }
+        /* Estilos para el inventario */
+        .inventory-section {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            overflow-y: auto;
+            padding-top: 60px;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .inventory-section.show-inventory {
+            transform: translateX(0);
+        }
+        .inventory-group {
+            border: 1px solid #444;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .inventory-card {
+            position: relative;
+            display: inline-block;
+            width: 100px;
+            text-align: center;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .inventory-card img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+        .inventory-card .tooltip {
+            visibility: hidden;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            white-space: nowrap;
+            font-size: 12px;
+            transition: visibility 0.2s, opacity 0.2s;
+            opacity: 0;
+        }
+        .inventory-card:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        .inventory-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .iconinv{
+            width: 25px;
+        }
+    </style>
+</head>
+<body>
+    <img src="img/TKORC.png" alt="Studio Logo" class="studio-logo">
+    <div class="navbar-toggle" onclick="toggleNavbar()">☰</div>
+    <div class="inventory-toggle" onclick="toggleInventorySection()"> <img src="img/inv.png" class="iconinv"></div>
+    <div class="navbar" id="navbar">
+        <a href="../miembros.html">MIEMBROS</a>
+        <a href="../eventos.html">EVENTOS</a>
+    </div>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-cover"></div>
+            <img src="img/ItzyP.jpeg" alt="Perfil" width="150" class="profile-pic" onerror="this.onerror=null; this.src='img/placeholder.jpeg';">
+            <div class="title-badge"></div>
+            <div class="profile-info">
+                <h1>ItzyOwO</h1>
+                <h2>----</h2>
+                <p>Desde: 10/02/2025</p>
+                <p>...</p>
+            </div>
+        </div>
+        <div class="achievements-section">
+            <div class="achievement-group">
+                <div class="group-header" onclick="toggleAchievements(this)">
+                    <img src="img/Titulo.png" alt="Evento 1" class="group-image">
+                    <div class="group-title">I.N.F.E.S.T.</div>
+                </div>
+                <div class="group-content">
+                    <div class="achievement-card">
+                        <img src="img/logros/infest/Sobrevive 10 días - Bloqueado.png" alt="Logro 1">
+                        <div class="tooltip">
+                            <strong>Superviviente</strong><br>
+                            Sobrevive 1 días
+                        </div>
+                    </div>
+                    <div class="achievement-card">
+                        <img src="img/logros/infest/Sobrevive 15 días - Bloqueado.png" alt="Logro 2">
+                        <div class="tooltip">
+                            <strong>No es nada facil</strong><br>
+                            Sobrevive 3 días
+                        </div>
+                    </div>
+                    <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 25 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Puedo con mas...</strong><br>
+                         Sobrevive 6 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 30 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Nada me detiene</strong><br>
+                         Sobrevive 10 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Impecable - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Impecable</strong><br>
+                         No mueras ni una sola vez
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Elimina a todas las calamidades - Asesino de dioses - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Asesino de dioses</strong><br>
+                         Oculto
+                        </div>
+            </div>
+            <!-- Más logros aquí -->
+        </div>
+    </div>
+</div>
+
+<!-- Más secciones aquí-->
+
+<!--<div class="achievements-section">
+    <div class="achievement-group">
+        <div class="group-header" onclick="toggleAchievements(this)">
+            <img src="img/logros/infest/Oculto.png" alt="Evento 1" class="group-image">
+            <div class="group-title">Among Us</div>
+        </div>
+        <div class="group-content">
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 10 días - Bloqueado.png" alt="Logro 1">
+                <div class="tooltip">
+                    <strong>Superviviente</strong><br>
+                         Sobrevive 10 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 15 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>No es nada facil</strong><br>
+                         Sobrevive 15 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 25 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Puedo con mas...</strong><br>
+                         Sobrevive 25 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 30 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Nada me detiene</strong><br>
+                         Sobrevive 30 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Elimina a todas las calamidades - Asesino de dioses - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Asesino de dioses</strong><br>
+                         Oculto
+                        </div>
+            </div>
+-->
+            <!-- Más logros aquí -->
+        </div>
+    </div>
+</div>
+
+<!-- Más secciones aquí-->
+<!--
+<div class="achievements-section">
+    <div class="achievement-group">
+        <div class="group-header" onclick="toggleAchievements(this)">
+            <img src="img/logros/infest/Oculto.png" alt="Evento 1" class="group-image">
+            <div class="group-title">El juego ese acuatico</div>
+        </div>
+        <div class="group-content">
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 10 días - Bloqueado.png" alt="Logro 1">
+                <div class="tooltip">
+                    <strong>Superviviente</strong><br>
+                         Sobrevive 10 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 15 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>No es nada facil</strong><br>
+                         Sobrevive 15 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 25 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Puedo con mas...</strong><br>
+                         Sobrevive 25 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Sobrevive 30 días - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Nada me detiene</strong><br>
+                         Sobrevive 30 días
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Oculto.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Oculto</strong><br>
+                         ???
+                        </div>
+            </div>
+            <div class="achievement-card">
+                <img src="img/logros/infest/Elimina a todas las calamidades - Asesino de dioses - Bloqueado.png" alt="Logro 2">
+                <div class="tooltip">
+                    <strong>Asesino de dioses</strong><br>
+                         Oculto
+                        </div>
+            </div>
+-->
+            <!-- Más logros aquí -->
+        </div>
+    </div>
+</div>
+
+    </div>
+                    <!-- Más logros aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="inventory-section">
+        <div class="inventory-group">
+            <div class="group-header" onclick="toggleInventory(this)">
+                <img src="img/Tickets.png" alt="Inventario" class="group-image">
+                <div class="group-title">Tickets</div>
+            </div>
+            <div class="group-content">
+                <div class="inventory-card">
+                    <img src="img/items/Cupón Especial.png" alt="Item 1">
+                    <div class="tooltip">
+                        <strong>Ticket especial</strong><br>
+                        Servira para el futuro.
+                    </div>
+                </div>
+                <!--
+                <div class="inventory-card">
+                    <img src="img/items/item2.png" alt="Item 2">
+                    <div class="tooltip">
+                        <strong>Poción de Vida</strong><br>
+                        Restaura 50 puntos de salud.
+                    </div>
+                </div>
+                -->
+                <!-- Más items aquí -->
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleNavbar() {
+            var navbar = document.getElementById('navbar');
+            navbar.classList.toggle('show-navbar');
+        }
+        function toggleAchievements(header) {
+            const content = header.nextElementSibling;
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        }
+        function toggleInventorySection() {
+            var inventory = document.querySelector('.inventory-section');
+            inventory.classList.toggle('show-inventory');
+        }
+        function toggleInventory(header) {
+            const content = header.nextElementSibling;
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        }
+    </script>
+</body>
+</html>
